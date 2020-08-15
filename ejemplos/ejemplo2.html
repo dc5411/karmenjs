@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title>Ejemplo 2 - XSS</title>
+        <script>
+            var getParams = function (url) {
+                var params = {};
+                var parser = document.createElement('a');
+                parser.href = url;
+                var query = parser.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    params[pair[0]] = decodeURIComponent(pair[1]);
+                }
+                return params;
+            };
+    
+            function getUsuario() {
+                var entorno = getParams(window.location.href);
+                var usuario = entorno["usuario"];
+                return usuario;
+            }
+
+            function getComentario() {
+                var entorno = getParams(window.location.href);
+                var comentario = entorno["comentario"];
+                return comentario;
+            }
+        </script>    
+    </head>
+    <body>
+        <h3>Ejemplo 2 - XSS Reflejado</h3>
+        <h3>Dejar un comentario</h3>
+        <tt>Consigna: Ingresar un comentario en el campo y enviarlo.</tt><BR><BR>
+        <form>
+            <b>Su nombre: </b><input type="text" name="usuario" id="usuario" placeholder="Mi usuario..."><BR><BR>
+            <b>Su comentario: </b><input type="text" name="comentario" id="comentario" placeholder="Mi comentario..."><BR><BR>
+            <input type="submit" value="Enviar">
+        </form>
+        <BR>
+        <h3>Comentarios en nuestra página:</h3>
+        <script>
+            var mi_usuario = getUsuario();
+            if (mi_usuario != undefined) {
+                document.write("<b>" + mi_usuario + " dice:</b><BR><BR>")
+            }
+            var mi_comentario = getComentario();
+            if (mi_comentario != undefined) {
+                document.write("<tt> " + mi_comentario + "</tt>")
+            }
+        </script>
+    </body>
+</html>    

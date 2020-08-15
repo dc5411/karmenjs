@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Karmen.js - Plantilla de pruebas</title>
+        <script>
+            function prueba() {
+                var url_string = window.location.href;
+                var url = new URL(url_string);
+                var c = url.searchParams.get("usuario");
+                document.write(c);
+            }
+        </script>    
+    </head>
+    <body>
+        <h3>Karmen.js - Plantilla de pruebas</h3>
+        Hola, <script>prueba();</script>
+        <BR><BR>
+        <button type="button" onclick="history.back();">Volver</button>
+    </body>
+</html>    
